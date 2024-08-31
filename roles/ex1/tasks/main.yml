@@ -1,0 +1,20 @@
+---
+
+- name: Display the welcome message
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/.bashrc
+    line: 'clear; echo "{{ helloMessageEx1 }}";'
+    create: yes
+
+- name: Create a file
+  ansible.builtin.file:
+    path: /home/{{ currentUser }}/password.txt
+    state: touch
+    owner: "{{ currentUser }}"
+    mode: '0644'
+
+- name: Add content to the file
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/password.txt
+    line: '{{ nextUserPassword }}'
+    create: yes

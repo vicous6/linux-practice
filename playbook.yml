@@ -1,6 +1,63 @@
 - hosts: localhost
   become: yes
+  vars:
+    users:
+      - { name: 'ex1', password: 'bla' }
+      - { name: 'ex2', password: 'bla2' }
+      - { name: 'ex3', password: 'bla3' }
+      - { name: 'ex4', password: 'bla4' }
+      - { name: 'ex5', password: 'bla5' }
+      - { name: 'ex6', password: 'bla6' }
+      - { name: 'ex7', password: 'bla7' }
+      - { name: 'ex8', password: 'bla8' }
+      - { name: 'ex9', password: 'bla9' }
+      - { name: 'ex10', password: 'bla10' }
+
   tasks:
-    - name: Include the example role
+    - name: Creation des Users
       include_role:
         name: addUsers
+
+    - name: Ajout du message de bienvenue sur le user start (creer par le Dockerfile)
+      include_role:
+        name: helloMessage
+
+    - name: Parametrage exercie1
+      include_role:
+        name: ex1
+      vars:
+        currentUser: {{ users[0].name }}
+        nextUser: {{ users[1].name }}
+        nextUserPassword: {{ users[1].password }}
+        helloMessageEx1: |
+          -----------------------------------------------------------------------------------------------------------------------------------------------------
+          Well done, your first Linux command, I'm proud of you.
+          Let's learn two new commands:
+          "ls": to list directory contents.
+          "cat": to read a file.
+          Use the password to connect to the next user/exercise: {{ nextUser }}
+          -----------------------------------------------------------------------------------------------------------------------------------------------------
+    - name: Parametrage exercie2
+      include_role:
+        name: ex2
+      vars:
+        currentUser: {{ users[1].name }}
+        nextUser:  {{ users[2].name }}
+        nextUserPassword: {{ users[2].password }}
+        helloMessageEx1: |
+          -----------------------------------------------------------------------------------------------------------------------------------------------------
+          Well done, your first Linux command, I'm proud of you.
+          Let's learn two new commands:
+          "ls": to list directory contents.
+          "cat": to read a file.
+          Use the password to connect to the next user/exercise: {{ nextUser }}
+          -----------------------------------------------------------------------------------------------------------------------------------------------------
+
+    # - name: Parametrage exercie3
+    #   include_role:
+    #     name: ex3
+
+    # - name: Parametrage exercie4
+    #   include_role:
+    #     name: ex4
+    

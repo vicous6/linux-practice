@@ -1,11 +1,11 @@
 #!/bin/bash
 
-docker stop my-ansible-container-instance
-docker rm my-ansible-container-instance
+docker stop linux-practice-instance
+docker rm linux-practice-instance
 
-docker build -t my-ansible-container .
+docker build -t vicous/linux-practice .
 # Run the container in detached mode
-docker run -d -p 8080:8080 --name my-ansible-container-instance my-ansible-container
+docker run -d -p 8080:8080 --name linux-practice-instance vicous/linux-practice
 
 # Open a shell in the running container
-docker exec -it my-ansible-container-instance /bin/bash
+docker exec -it linux-practice-instance /bin/bash

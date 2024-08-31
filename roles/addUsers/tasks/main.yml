@@ -4,16 +4,17 @@
   ansible.builtin.user:
     name: "{{ item.name }}"
     state: present
-    password: "{{ 'password' | password_hash('sha512') }}"
+    shell: /bin/bash
+    create_home: yes
+    password: "{{ item.password | password_hash('sha512') }}"
   become: true
-  loop:
-      - { name: 'ex1' , password: 'bla' }
-      - { name: 'ex2' , password: 'bla2' }
-      - { name: 'ex3' , password: 'bla3' }
-      - { name: 'ex4' , password: 'bla4' }
-      - { name: 'ex5' , password: 'bla5' }
-      - { name: 'ex6' , password: 'bla6' }
-      - { name: 'ex7' , password: 'bla7' }
-      - { name: 'ex8' , password: 'bla8' }
-      - { name: 'ex9' , password: 'bla9' }
-      - { name: 'ex10' , password: 'bla10' }
+  loop: "{{ users }}"
+
+- name: Force to cd to home directory for each user
+  ansible.builtin.lineinfile:
+    path: "/home/{{ item.name }}/.bashrc"
+    line: 'cd ~'
+    create: yes
+    state: present
+  loop: "{{ users }}"
+

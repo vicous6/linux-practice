@@ -1,0 +1,14 @@
+---
+
+- name: Welcome message
+  vars:    
+    helloMessage: | 
+      -----------------------------------------------------------------------------------------------------------------------------------------------------
+      Welcome to the Linux World, i'm vicous, your host for this aventure
+      Your first task is to use the "su" command and to switch to the user 'ex1' with 'su ex1' with the password: "{{ users[0].password }}"
+      Type 'exit' to quit the docker container
+      -----------------------------------------------------------------------------------------------------------------------------------------------------
+  ansible.builtin.lineinfile:
+    path: /home/start/.bashrc
+    line: 'echo "{{ helloMessage }}";'
+    create: yes
