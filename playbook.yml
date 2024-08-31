@@ -1,0 +1,6 @@
+- hosts: localhost
+  become: yes
+  tasks:
+    - name: Include the example role
+      include_role:
+        name: addUsers

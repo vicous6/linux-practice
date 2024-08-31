@@ -1,0 +1,19 @@
+---
+# tasks file for addUsers
+- name: Add users
+  ansible.builtin.user:
+    name: "{{ item.name }}"
+    state: present
+    password: "{{ 'password' | password_hash('sha512') }}"
+  become: true
+  loop:
+      - { name: 'ex1' , password: 'bla' }
+      - { name: 'ex2' , password: 'bla2' }
+      - { name: 'ex3' , password: 'bla3' }
+      - { name: 'ex4' , password: 'bla4' }
+      - { name: 'ex5' , password: 'bla5' }
+      - { name: 'ex6' , password: 'bla6' }
+      - { name: 'ex7' , password: 'bla7' }
+      - { name: 'ex8' , password: 'bla8' }
+      - { name: 'ex9' , password: 'bla9' }
+      - { name: 'ex10' , password: 'bla10' }
