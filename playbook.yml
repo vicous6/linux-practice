@@ -53,11 +53,5 @@
           Use the password to connect to the next user/exercise: {{ nextUser }}
           -----------------------------------------------------------------------------------------------------------------------------------------------------
 
-    # - name: Parametrage exercie3
-    #   include_role:
-    #     name: ex3
 
-    # - name: Parametrage exercie4
-    #   include_role:
-    #     name: ex4
     
