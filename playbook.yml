@@ -26,9 +26,9 @@
       include_role:
         name: ex1
       vars:
-        currentUser: {{ users[0].name }}
-        nextUser: {{ users[1].name }}
-        nextUserPassword: {{ users[1].password }}
+        currentUser: "{{ users[0].name }}"
+        nextUser: "{{ users[1].name }}"
+        nextUserPassword: "{{ users[1].password }}"
         helloMessageEx1: |
           -----------------------------------------------------------------------------------------------------------------------------------------------------
           Well done, your first Linux command, I'm proud of you.
@@ -41,17 +41,15 @@
       include_role:
         name: ex2
       vars:
-        currentUser: {{ users[1].name }}
-        nextUser:  {{ users[2].name }}
-        nextUserPassword: {{ users[2].password }}
-        helloMessageEx1: |
-          -----------------------------------------------------------------------------------------------------------------------------------------------------
-          Well done, your first Linux command, I'm proud of you.
-          Let's learn two new commands:
-          "ls": to list directory contents.
-          "cat": to read a file.
-          Use the password to connect to the next user/exercise: {{ nextUser }}
-          -----------------------------------------------------------------------------------------------------------------------------------------------------
+        currentUser: "{{ users[1].name }}"
+        nextUser:  "{{ users[2].name }}"
+        nextUserPassword: "{{ users[2].password }}"
+        
+    # - name: Parametrage exercie3
+    #   include_role:
+    #     name: ex3
 
-
+    # - name: Parametrage exercie4
+    #   include_role:
+    #     name: ex4
     

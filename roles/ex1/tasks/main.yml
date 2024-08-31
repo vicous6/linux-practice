@@ -1,9 +1,19 @@
 ---
 
 - name: Display the welcome message
+  vars:
+    helloMessage: |
+      -----------------------------------------------------------------------------------------------------------------------------------------------------
+      Well done, your first Linux command, I'm proud of you.
+      Let's learn two new commands:
+      "ls": to list directory contents.
+      "cat": to read a file.
+      Use the password to connect to the next user/exercise: {{ nextUser }}
+      -----------------------------------------------------------------------------------------------------------------------------------------------------
+
   ansible.builtin.lineinfile:
     path: /home/{{ currentUser }}/.bashrc
-    line: 'clear; echo "{{ helloMessageEx1 }}";'
+    line: 'clear; echo "{{ helloMessage }}";'
     create: yes
 
 - name: Create a file
