@@ -29,14 +29,7 @@
         currentUser: "{{ users[0].name }}"
         nextUser: "{{ users[1].name }}"
         nextUserPassword: "{{ users[1].password }}"
-        helloMessageEx1: |
-          -----------------------------------------------------------------------------------------------------------------------------------------------------
-          Well done, your first Linux command, I'm proud of you.
-          Let's learn two new commands:
-          "ls": to list directory contents.
-          "cat": to read a file.
-          Use the password to connect to the next user/exercise: {{ nextUser }}
-          -----------------------------------------------------------------------------------------------------------------------------------------------------
+    
     - name: Parametrage exercie2
       include_role:
         name: ex2
