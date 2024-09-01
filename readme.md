@@ -18,7 +18,7 @@ TASK 3: execute a script
 
 TASK 4: cp mv
 
-TASK 5:
+TASK 5: touch nano
  
 TASK 6:
 
