@@ -4,26 +4,39 @@
   vars:
     helloMessage: |
       ------------------------------------------------------------------------------------------------------------------------------------------------------
-      Time to learn to execute bash script, u can use "./name-of-the-file.sh" 
+      Time to learn how to move and copy a file
+      "touch"
+      "nano"
+      create a file named: "truc.txt"
+      use nano to edit the file, write "hello world" inside and save it
+      then execute the script "script.sh" to get the password of the next user
       -----------------------------------------------------------------------------------------------------------------------------------------------------
   ansible.builtin.lineinfile:
     path: /home/{{ currentUser }}/.bashrc
     line: 'clear;echo "{{ helloMessage }}";'
     create: yes
 
-
-- name: Create a file
+- name: Create the script
   ansible.builtin.file:
     path: /home/{{ currentUser }}/script.sh
     state: touch
     owner: "{{ currentUser }}"
-    mode: '0777'
+    mode: '0755'
 
-
-- name: Insert password in the script
+- name: Write the script
   vars:
-    content: 'password: "{{ nextUserPassword }}"'
+    script: |
+      #!/bin/bash
+      file="truc.txt"
+      if [ -f "$file" ] && grep -q "hello world" "$file"; then
+        echo "------------------"
+        echo "$file is present."
+        echo password: $(echo "{{ nextUserPassword }}" | base64 --decode)
+        echo "------------------"
+      else
+        echo "One or both files are missing."
+      fi
   ansible.builtin.lineinfile:
     path: /home/{{ currentUser }}/script.sh
-    line: 'echo "{{ content }}";'
+    line: '{{ script }}'
     create: yes

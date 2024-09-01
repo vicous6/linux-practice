@@ -6,7 +6,7 @@
       - { name: 'ex2', password: 'bla2' }
       - { name: 'ex3', password: 'bla3' }
       - { name: 'ex4', password: 'bla4' }
-      - { name: 'ex5', password: 'YmxhNQ==' }
+      - { name: 'ex5', password: 'bla5' }
       - { name: 'ex6', password: 'bla6' }
       - { name: 'ex7', password: 'bla7' }
       - { name: 'ex8', password: 'bla8' }
@@ -52,5 +52,29 @@
       vars:
         currentUser: "{{ users[3].name }}"
         nextUser:  "{{ users[4].name }}"
-        nextUserPassword: "{{ users[4].password }}"
+        nextUserPassword: "{{ users[4].password | b64encode}}"
+
+    - name: Parametrage exercie5
+      include_role:
+        name: ex5
+      vars:
+        currentUser: "{{ users[4].name }}"
+        nextUser:  "{{ users[5].name }}"
+        nextUserPassword: "{{ users[5].password | b64encode}}"
+
+    # - name: Parametrage exercie6
+    #   include_role:
+    #     name: ex6
+    #   vars:
+    #     currentUser: "{{ users[5].name }}"
+    #     nextUser:  "{{ users[6].name }}"
+    #     nextUserPassword: "{{ users[6].password }}"
+
+    # - name: Parametrage exercie7
+    #   include_role:
+    #     name: ex7
+    #   vars:
+    #     currentUser: "{{ users[6].name }}"
+    #     nextUser:  "{{ users[7].name }}"
+    #     nextUserPassword: "{{ users[7].password }}"
         
