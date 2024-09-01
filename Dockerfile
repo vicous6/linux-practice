@@ -9,7 +9,9 @@ RUN apt-get update && \
     apt-get install -y \
     bash \
     bash-completion \
-    curl \
+    curl \ 
+    nano \
+    iputils-ping \
     software-properties-common \
     lsb-release && \
     # Add Ansible PPA and install Ansible

@@ -1,2 +1,63 @@
 ---
-# tasks file for ex4
+
+- name: Display the welcome message
+  vars:
+    helloMessage: |
+      ------------------------------------------------²-----------------------------------------------------------------------------------------------------
+      Time to learn how to move and copy a file
+      "mv"
+      "cp"
+      move the file "file.txt" to the folder "destination"
+      then copy it with the name "file2.txt"
+      then execute the script "script.sh" to get the password of the next user
+      -----------------------------------------------------------------------------------------------------------------------------------------------------
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/.bashrc
+    line: 'clear;echo "{{ helloMessage }}";'
+    create: yes
+
+- name: Create a directory
+  ansible.builtin.file:
+    path: /home/{{ currentUser }}/destination/
+    state: directory
+    owner: "{{ currentUser }}"
+    mode: '0777'
+
+- name: Create the scrit
+  ansible.builtin.file:
+    path: /home/{{ currentUser }}/destination/script.sh
+    state: touch
+    owner: "{{ currentUser }}"
+    mode: '0755'
+
+- name: Create the file
+  ansible.builtin.file:
+    path: /home/{{ currentUser }}/file.txt
+    state: touch
+    owner: "{{ currentUser }}"
+    mode: '0777'
+
+
+- name: Display the welcome message
+  vars:
+    script: |
+      #!/bin/bash
+      directory="/home/{{ currentUser }}/destination"
+      file1="file.txt"
+      file2="file2.txt"
+
+      if [ -f "$directory/$file1" ] && [ -f "$directory/$file2" ]; then
+        echo "------------------"
+        echo "Both $file1 and $file2 are present."
+        echo "" | base64 --decode
+        echo password: $(echo "{{ nextUserPassword }}" | base64 --decode)
+        echo "------------------"
+      else
+        echo "One or both files are missing."
+      fi
+
+     
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/destination/script.sh
+    line: '{{ script }}'
+    create: yes

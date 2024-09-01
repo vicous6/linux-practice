@@ -1,2 +1,29 @@
 ---
-# tasks file for ex3
+
+- name: Display the welcome message
+  vars:
+    helloMessage: |
+      ------------------------------------------------²-----------------------------------------------------------------------------------------------------
+      Time to learn to execute bash script, u can use "./name-of-the-file.sh" 
+      -----------------------------------------------------------------------------------------------------------------------------------------------------
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/.bashrc
+    line: 'clear;echo "{{ helloMessage }}";'
+    create: yes
+
+
+- name: Create a file
+  ansible.builtin.file:
+    path: /home/{{ currentUser }}/script.sh
+    state: touch
+    owner: "{{ currentUser }}"
+    mode: '0777'
+
+
+- name: Insert password in the script
+  vars:
+    content: 'password: "{{ nextUserPassword }}"'
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/script.sh
+    line: 'echo "{{ content }}";'
+    create: yes

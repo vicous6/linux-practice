@@ -1,2 +1,32 @@
 ---
-# tasks file for ex2
+
+- name: Display the welcome message
+  vars:
+    helloMessage: |
+      ------------------------------------------------²-----------------------------------------------------------------------------------------------------
+      Now lets discover the command "pwd" and "cd" who permit know i which directory you are and to move to another directory.
+      Use the password to connect to the next user/exercise: {{ nextUser }}
+      -----------------------------------------------------------------------------------------------------------------------------------------------------
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/.bashrc
+    line: 'clear;echo "{{ helloMessage }}";'
+    create: yes
+
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: /home/{{ currentUser }}/secret-location/birthday-box
+    state: directory
+    owner: "{{ currentUser }}"
+    mode: '0755'
+- name: Create a file
+  ansible.builtin.file:
+    path: /home/{{ currentUser }}/secret-location/birthday-box/password.txt
+    state: touch
+    owner: "{{ currentUser }}"
+    mode: '0644'
+
+- name: Add content to the file
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/secret-location/birthday-box/password.txt
+    line: '{{ nextUserPassword }}'
+    create: yes

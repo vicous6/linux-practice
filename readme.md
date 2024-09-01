@@ -6,15 +6,17 @@ docker exec -it linux-practice-instance /bin/bash
 
 # Description of the tutorial
 
+a faire : cp mv touch rm | grep find nano tar zip 
+
 BEGINING: su
 
 TASK 1: ls,cat (done)
 
-TASK 2: cd
+TASK 2: cd, pwd (done)
 
-TASK 3:
+TASK 3: execute a script
 
-TASK 4:
+TASK 4: cp mv
 
 TASK 5:
  
