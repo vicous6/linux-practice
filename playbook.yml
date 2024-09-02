@@ -62,19 +62,19 @@
         nextUser:  "{{ users[5].name }}"
         nextUserPassword: "{{ users[5].password | b64encode}}"
 
-    # - name: Parametrage exercie6
-    #   include_role:
-    #     name: ex6
-    #   vars:
-    #     currentUser: "{{ users[5].name }}"
-    #     nextUser:  "{{ users[6].name }}"
-    #     nextUserPassword: "{{ users[6].password }}"
+    - name: Parametrage exercie6
+      include_role:
+        name: ex6
+      vars:
+        currentUser: "{{ users[5].name }}"
+        nextUser:  "{{ users[6].name }}"
+        nextUserPassword: "{{ users[6].password | b64encode}}"
 
-    # - name: Parametrage exercie7
-    #   include_role:
-    #     name: ex7
-    #   vars:
-    #     currentUser: "{{ users[6].name }}"
-    #     nextUser:  "{{ users[7].name }}"
-    #     nextUserPassword: "{{ users[7].password }}"
+    - name: Parametrage exercie7
+      include_role:
+        name: ex7
+      vars:
+        currentUser: "{{ users[6].name }}"
+        nextUser:  "{{ users[7].name }}"
+        nextUserPassword: "{{ users[7].password }}"
         

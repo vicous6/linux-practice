@@ -1,2 +1,78 @@
 ---
-# tasks file for ex6
+
+- name: Display the welcome message
+  vars:
+    helloMessage: |
+      ------------------------------------------------------------------------------------------------------------------------------------------------------
+      Time to learn how to search files and delete it.
+      "find"
+      "rm"
+      find "malware.txt" and then delete it
+      then execute the script "script.sh" to get the password of the next user
+      -----------------------------------------------------------------------------------------------------------------------------------------------------
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/.bashrc
+    line: 'clear;echo "{{ helloMessage }}";'
+    create: yes
+
+- name: Create the script
+  ansible.builtin.file:
+    path: /home/{{ currentUser }}/script.sh
+    state: touch
+    owner: "{{ currentUser }}"
+    mode: '0755'
+
+- name: Create directories
+  ansible.builtin.file:
+    path: /home/{{ currentUser }}/1/2/3/4/5/6/7/8/9/10/
+    state: directory
+    owner: "{{ currentUser }}"
+    mode: '0777'
+
+- name: Create directories  
+  ansible.builtin.file:
+    path: "/home/{{ currentUser }}/{{ item.path }}"
+    state: directory
+    owner: "{{ currentUser }}"
+    mode: '0777'
+  loop: 
+    - { path: 'x/y/z/a/b/c/d/e/f/g' }
+    - { path: 'alpha/beta/gamma/delta/epsilon/zeta/eta/theta/iota/kappa' }
+    - { path: '1/2/3/4/5/6/7/8/9/0' }
+    - { path: 'red/green/blue/yellow/orange/purple/brown/black/white/gray' }
+    - { path: 'cat/dog/mouse/elephant/lion/tiger/bear/wolf/fox/deer' }
+    - { path: 'apple/banana/cherry/date/elderberry/fig/grape/honeydew/kiwi/lemon' }
+    - { path: 'car/bike/bus/train/plane/boat/subway/tram/scooter/skateboard' }
+    - { path: 'summer/winter/spring/fall/monsoon/hurricane/tornado/earthquake/blizzard/flood' }
+    - { path: 'north/south/east/west/central/midwest/northeast/southeast/northwest/southwest' }
+    - { path: 'desk/chair/table/sofa/bed/cabinet/bookshelf/dresser/nightstand/lamp' }
+  
+
+
+
+- name: Create the file
+  ansible.builtin.file:
+    path: /home/{{ currentUser }}/summer/winter/spring/fall/monsoon/hurricane/tornado/earthquake/blizzard/flood/malware.txt
+    state: touch
+    owner: "{{ currentUser }}"
+    mode: '0777'
+
+- name: Write the script
+  vars:
+    script: |
+      #!/bin/bash
+      file="malware.txt"
+      directory="/home/{{ currentUser }}/summer/winter/spring/fall/monsoon/hurricane/tornado/earthquake/blizzard/flood"
+      if [ -f "$directory/$file" ]; then
+        echo "------------------"
+        echo "$file is not deleted"
+        echo "------------------"
+      else
+        echo "------------------"
+        echo password: $(echo "{{ nextUserPassword }}" | base64 --decode)
+        echo "------------------"
+      fi
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/script.sh
+    line: '{{ script }}'
+    create: yes

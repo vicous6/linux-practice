@@ -4,7 +4,7 @@
   vars:
     helloMessage: |
       ------------------------------------------------------------------------------------------------------------------------------------------------------
-      Time to learn how to move and copy a file
+      Time to learn how to create and edit files.
       "touch"
       "nano"
       create a file named: "truc.txt"
