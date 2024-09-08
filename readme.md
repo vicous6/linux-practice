@@ -1,6 +1,6 @@
 To start the tutorial 
 
-docker run -d -p 8080:8080 --name linux-practice-instance vicous/linux-practice
+docker run -d -p 8080:8080 --name linux-practice-instance vicous/linux-practice:latest
 
 docker exec -it linux-practice-instance /bin/bash
 
