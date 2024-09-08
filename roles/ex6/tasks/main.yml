@@ -22,13 +22,6 @@
     owner: "{{ currentUser }}"
     mode: '0755'
 
-- name: Create directories
-  ansible.builtin.file:
-    path: /home/{{ currentUser }}/1/2/3/4/5/6/7/8/9/10/
-    state: directory
-    owner: "{{ currentUser }}"
-    mode: '0777'
-
 - name: Create directories  
   ansible.builtin.file:
     path: "/home/{{ currentUser }}/{{ item.path }}"
@@ -47,9 +40,6 @@
     - { path: 'north/south/east/west/central/midwest/northeast/southeast/northwest/southwest' }
     - { path: 'desk/chair/table/sofa/bed/cabinet/bookshelf/dresser/nightstand/lamp' }
   
-
-
-
 - name: Create the file
   ansible.builtin.file:
     path: /home/{{ currentUser }}/summer/winter/spring/fall/monsoon/hurricane/tornado/earthquake/blizzard/flood/malware.txt

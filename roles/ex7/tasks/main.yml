@@ -1,2 +1,48 @@
 ---
-# tasks file for ex7
+
+- name: Display the welcome message
+  vars:
+    helloMessage: |
+      ------------------------------------------------------------------------------------------------------------------------------------------------------
+      Time to learn how to search files and delete it.
+      grep
+      look at the txt file, and find how many time "John Garcia" is present
+      then execute the script "script.sh" to get the password of the next user
+      -----------------------------------------------------------------------------------------------------------------------------------------------------
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/.bashrc
+    line: 'clear;echo "{{ helloMessage }}";'
+    create: yes
+
+- name: Create the script
+  ansible.builtin.file:
+    path: /home/{{ currentUser }}/script.sh
+    state: touch
+    owner: "{{ currentUser }}"
+    mode: '0755'
+
+- name: copy file "fileEx7.txt" to the home
+  ansible.builtin.copy:
+    src: files/fileEx7.txt
+    dest: /home/{{ currentUser }}/names.txt
+    owner: "{{ currentUser }}"
+    mode: '0755'
+
+- name: Write the script
+  vars:
+    script: |
+      #!/bin/bash
+      read -p "How Many 'John Garcia' ? " COUNT
+      if [ $COUNT -eq 118 ]; then
+        echo "------------------"
+        echo password: $(echo "{{ nextUserPassword }}" | base64 --decode)
+        echo "------------------"
+      else
+        echo "------------------"
+        echo "Try again"
+        echo "------------------"
+      fi
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/script.sh
+    line: '{{ script }}'
+    create: yes
