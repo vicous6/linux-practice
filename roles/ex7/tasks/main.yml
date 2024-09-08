@@ -43,6 +43,15 @@
         echo "------------------"
       fi
   ansible.builtin.lineinfile:
-    path: /home/{{ currentUser }}/script.sh
-    line: '{{ script }}'
+    path: /home/{{ currentUser }}/.encoded_script.sh
+    line: '{{ script | b64encode }}'
     create: yes
+
+- name: Create the wrapper script to decode and execute
+  ansible.builtin.copy:
+    dest: /home/{{ currentUser }}/script.sh
+    content: |
+      #!/bin/bash
+      base64 -d /home/{{ currentUser }}/.encoded_script.sh | bash
+    owner: "{{ currentUser }}"
+    mode: '0755'

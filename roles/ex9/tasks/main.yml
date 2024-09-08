@@ -1,2 +1,58 @@
 ---
-# tasks file for ex9
+
+- name: Display the welcome message
+  vars:
+    helloMessage: |
+      ------------------------------------------------------------------------------------------------------------------------------------------------------
+      Time to create your own script
+      
+      1: create a file "fileEx9.sh" in your home directory
+      2: write a script that will ask the user to enter a number using the "read" keyword, and output this number mutiplied by 2 
+      3: don't forget to make ur script executable
+
+      then execute the script "script.sh" to get the password of the next user
+      -----------------------------------------------------------------------------------------------------------------------------------------------------
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/.bashrc
+    line: 'clear;echo "{{ helloMessage }}";'
+    create: yes
+
+- name: Create the script
+  ansible.builtin.file:
+    path: /home/{{ currentUser }}/script.sh
+    state: touch
+    owner: "{{ currentUser }}"
+    mode: '0755'
+
+- name: Write the script
+  vars:
+    script: |
+      #!/bin/bash
+      output1=$(echo 2 | bash fileEx9.sh)
+      output2=${output2:-0}
+
+      output2=$(echo 50 | bash fileEx9.sh)
+      output2=${output2:-0}
+      if [ "$output1" -eq 4 ] && [ "$output2" -eq 100 ] ; then
+        echo "------------------"
+        echo "bravissimo"
+        echo password: $(echo "{{ nextUserPassword }}" | base64 --decode)
+        echo "------------------"
+      else
+        echo "------------------"
+        echo "Try again"
+        echo "------------------"
+      fi
+  ansible.builtin.lineinfile:
+    path: /home/{{ currentUser }}/.encoded_script.sh
+    line: '{{ script | b64encode }}'
+    create: yes
+
+- name: Create the wrapper script to decode and execute
+  ansible.builtin.copy:
+    dest: /home/{{ currentUser }}/script.sh
+    content: |
+      #!/bin/bash
+      base64 -d /home/{{ currentUser }}/.encoded_script.sh | bash
+    owner: "{{ currentUser }}"
+    mode: '0755'
