@@ -1,5 +1,4 @@
 ---
-
 - name: Display the welcome message
   vars:
     helloMessage: |
@@ -19,39 +18,33 @@
     path: /home/{{ currentUser }}/script.sh
     state: touch
     owner: "{{ currentUser }}"
+    group: "{{ currentUser }}"
     mode: '0755'
 
-- name: copy file "fileEx7.txt" to the home
+- name: Copy file "fileEx7.txt" to the home
   ansible.builtin.copy:
     src: files/fileEx7.txt
     dest: /home/{{ currentUser }}/names.txt
     owner: "{{ currentUser }}"
-    mode: '0755'
+    mode: '0644'
 
 - name: Write the script
   vars:
     script: |
-      #!/bin/bash
-      read -p "How Many 'John Garcia' ? " COUNT
-      if [ $COUNT -eq 118 ]; then
-        echo "------------------"
-        echo password: $(echo "{{ nextUserPassword }}" | base64 --decode)
-        echo "------------------"
-      else
-        echo "------------------"
-        echo "Try again"
-        echo "------------------"
-      fi
-  ansible.builtin.lineinfile:
-    path: /home/{{ currentUser }}/.encoded_script.sh
-    line: '{{ script | b64encode }}'
-    create: yes
+      read -r -p "How Many John Garcia? " COUNT </dev/tty; [ "$COUNT" -eq 118 ] && echo "password: $(echo YmxhOA== | base64 -d)" || echo "Try again"
+
+  ansible.builtin.copy:
+    dest: /home/{{ currentUser }}/.encoded_script.sh
+    content: "{{ script | b64encode }}"
+    owner: "{{ currentUser }}"
+    group: "{{ currentUser }}"
+    mode: '0600'
 
 - name: Create the wrapper script to decode and execute
   ansible.builtin.copy:
     dest: /home/{{ currentUser }}/script.sh
     content: |
       #!/bin/bash
-      base64 -d /home/{{ currentUser }}/.encoded_script.sh | bash
+      base64 -d /home/{{ currentUser }}/.encoded_script.sh | bash -s
     owner: "{{ currentUser }}"
     mode: '0755'

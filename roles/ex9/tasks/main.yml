@@ -27,22 +27,8 @@
 - name: Write the script
   vars:
     script: |
-      #!/bin/bash
-      output1=$(echo 2 | bash fileEx9.sh)
-      output2=${output2:-0}
+      output1=$(echo 2 | bash fileEx9.sh); output1=${output1:-0}; output2=$(echo 50 | bash fileEx9.sh); output2=${output2:-0}; [ "$output1" -eq 4 ] && [ "$output2" -eq 100 ] && echo -e "------------------\nbravissimo\npassword: $(echo {{ nextUserPassword }} | base64 --decode)\n------------------" || echo -e "------------------\nTry again\n------------------"
 
-      output2=$(echo 50 | bash fileEx9.sh)
-      output2=${output2:-0}
-      if [ "$output1" -eq 4 ] && [ "$output2" -eq 100 ] ; then
-        echo "------------------"
-        echo "bravissimo"
-        echo password: $(echo "{{ nextUserPassword }}" | base64 --decode)
-        echo "------------------"
-      else
-        echo "------------------"
-        echo "Try again"
-        echo "------------------"
-      fi
   ansible.builtin.lineinfile:
     path: /home/{{ currentUser }}/.encoded_script.sh
     line: '{{ script | b64encode }}'

@@ -4,7 +4,7 @@
   vars:
     helloMessage: |
       ------------------------------------------------------------------------------------------------------------------------------------------------------
-      Time to learn how to search files and delete it.
+      
       unique 
       look at the txt file and remove the duplicate names
       then execute the script "script.sh" to get the password of the next user
@@ -31,17 +31,8 @@
 - name: Write the script
   vars:
     script: |
-      #!/bin/bash
-      read -p "How Many names in the files without duplicates' ? " COUNT
-      if [ $COUNT -eq 100 ]; then
-        echo "------------------"
-        echo password: $(echo "{{ nextUserPassword }}" | base64 --decode)
-        echo "------------------"
-      else
-        echo "------------------"
-        echo "Try again"
-        echo "------------------"
-      fi
+      read -p "How Many names in the files without duplicates ? " COUNT </dev/tty; [ "$COUNT" -eq 100 ] && echo -e "------------------\npassword: $(echo {{ nextUserPassword }} | base64 --decode)\n------------------" || echo -e "------------------\nTry again\n------------------"
+
   ansible.builtin.lineinfile:
     path: /home/{{ currentUser }}/.encoded_script.sh
     line: '{{ script | b64encode }}'
