@@ -12,6 +12,7 @@ RUN apt-get update && \
     bash-completion \
     curl \ 
     nano \
+    man \
     iputils-ping \
     software-properties-common \
     lsb-release && \
@@ -32,6 +33,7 @@ RUN useradd -ms /bin/bash  start
 COPY ./* /ansible/
 
 RUN ansible-playbook playbook.yml || exit 1
+RUN rm -rf /ansible
 EXPOSE 8080
 USER start
 WORKDIR /home/start

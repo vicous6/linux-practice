@@ -6,8 +6,8 @@
       -----------------------------------------------------------------------------------------------------------------------------------------------------
       Well done, your first Linux command, I'm proud of you.
       Let's learn two new commands:
-      "ls": to list directory contents.
-      "cat": to read a file.
+      "ls": to list all the files and folders inside the one you are currently in.
+      "cat": to read the content of a file.
       Use the password to connect to the next user/exercise: {{ nextUser }}
       -----------------------------------------------------------------------------------------------------------------------------------------------------
 

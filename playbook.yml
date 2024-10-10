@@ -97,4 +97,12 @@
         currentUser: "{{ users[8].name }}"
         nextUser:  "{{ users[9].name }}"
         nextUserPassword: "{{ users[9].password | b64encode}}"
+
+    - name: Parametrage exercie10
+      include_role:
+        name: ex10
+      vars:
+        currentUser: "{{ users[9].name }}"
+        nextUser:  "{{ users[10].name }}"
+        nextUserPassword: "{{ users[10].password | b64encode}}"
         
